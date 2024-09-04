@@ -1,0 +1,53 @@
+stages:
+  - build
+  - review
+
+variables:
+  MAVEN_CLI_OPTS: "-DskipTests=true --batch-mode --errors"
+  JAVA_HOME: "/usr/lib/jvm/java-11-openjdk-amd64"
+
+before_script:
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
+
+build_job:
+  stage: build
+  script:
+    - echo "Checking out the repository"
+    - git clone https://github.com/$CI_PROJECT_PATH.git .
+    - mkdir -p ./libs
+    - echo "Downloading JAR file"
+    - wget -O ./libs/code-lens-sdk-1.0.jar https://github.com/lhccong/CodeLens/releases/download/v1.0/code-lens-sdk-1.0.jar
+
+review_job:
+  stage: review
+  script:
+    - echo "Extracting repository name"
+    - export REPO_NAME=$(basename "$CI_PROJECT_PATH")
+    - echo "Extracting branch name"
+    - export BRANCH_NAME="$CI_COMMIT_REF_NAME"
+    - echo "Extracting commit author"
+    - export COMMIT_AUTHOR="$(git log -1 --pretty=format:'%an <%ae>')"
+    - echo "Extracting commit message"
+    - export COMMIT_MESSAGE="$(git log -1 --pretty=format:'%s')"
+    - echo "Printing repository, branch name, commit author, and commit message"
+    - echo "Repository name is $REPO_NAME"
+    - echo "Branch name is $BRANCH_NAME"
+    - echo "Commit author is $COMMIT_AUTHOR"
+    - echo "Commit message is $COMMIT_MESSAGE"
+    - echo "Running CodeLens review"
+    - java -jar ./libs/code-lens-sdk-1.0.jar
+  only:
+    - master
+  variables:
+    GITHUB_TOKEN: $CODE_TOKEN
+    GITHUB_REVIEW_LOG_URI: $CODE_REVIEW_LOG_URI
+    COMMIT_PROJECT: $REPO_NAME
+    COMMIT_BRANCH: $BRANCH_NAME
+    COMMIT_AUTHOR: $COMMIT_AUTHOR
+    COMMIT_MESSAGE: $COMMIT_MESSAGE
+    SECRET: $SECRET
+    APPID: $APPID
+    WEIXIN_TOUSER: $WEIXIN_TOUSER
+    WEIXIN_TEMPLATE_ID: $WEIXIN_TEMPLATE_ID
+    GLM_API_HOST: $GLM_API_HOST
+    GLM_API_KEY: $GLM_API_KEY
