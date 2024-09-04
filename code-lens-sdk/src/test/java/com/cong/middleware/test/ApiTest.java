@@ -1,10 +1,9 @@
 package com.cong.middleware.test;
 
 import com.alibaba.fastjson2.JSON;
-import com.cong.middleware.sdk.domain.model.ChatCompletionSyncResponse;
-import com.cong.middleware.sdk.domain.model.Message;
+import com.cong.middleware.sdk.infrastructure.openai.dto.ChatCompletionSyncResponseDTO;
+import com.cong.middleware.sdk.infrastructure.weixin.dto.TemplateMessageDTO;
 import com.cong.middleware.sdk.types.utils.BearerTokenUtils;
-import com.cong.middleware.sdk.types.utils.WXAccessTokenUtils;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -48,7 +47,7 @@ public class ApiTest {
         in.close();
         connection.disconnect();
 
-        ChatCompletionSyncResponse response = JSON.parseObject(content.toString(), ChatCompletionSyncResponse.class);
+        ChatCompletionSyncResponseDTO response = JSON.parseObject(content.toString(), ChatCompletionSyncResponseDTO.class);
         System.out.println(response.getChoices().get(0).getMessage().getContent());
 
     }
@@ -86,12 +85,12 @@ public class ApiTest {
 //        String accessToken = WXAccessTokenUtils.getAccessToken();
 //        System.out.println(accessToken);
 
-        Message message = new Message();
-        message.put("project","代码评审");
-        message.put("review","feat: 新加功能");
+        TemplateMessageDTO templateMessageDTO = new TemplateMessageDTO("","");
+        templateMessageDTO.put("project","代码评审");
+        templateMessageDTO.put("review","feat: 新加功能");
 
         String url = String.format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s", "84_zJKM3QauYpPp1WuMQtA0KaCWfqyXGtnrcIBbhEsbHhZehmagCPy1wBkYhFO7ie-a4DNzurUNwl4cZcUbl55EvGeDLGTVFm38suzSkFJtnHYwm348Vt10f1uH6rQIWQaAAAVJD");
-        sendPostRequest(url, JSON.toJSONString(message));
+        sendPostRequest(url, JSON.toJSONString(templateMessageDTO));
     }
 
     private static void sendPostRequest(String urlString, String jsonBody) {
