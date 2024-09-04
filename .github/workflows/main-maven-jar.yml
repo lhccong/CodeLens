@@ -32,3 +32,6 @@ jobs:
 
       - name: Run Code Review
         run: java -jar ./libs/code-lens-sdk-1.0.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.CODE_TOKEN }}
+          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
