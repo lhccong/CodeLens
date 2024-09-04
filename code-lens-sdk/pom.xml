@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.cong</groupId>
         <artifactId>CodeLens</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>code-lens-sdk</artifactId>
