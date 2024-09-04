@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class Message {
 
-    private String touser = "or0Ab6ivwmypESVp_bYuk92T6SvU";
-    private String templateId = "GLlAM-Q4jdgsktdNd35hnEbHVam2mwsW2YWuxDhpQkU";
+    private String touser = "oSmvd6SaVZAZ814tHzLVii7dah8Y";
+    private String template_id = "WJc15CROcOBt6sfEs44_phCf9pQ6ncLpTM3duzmG6pE";
     private String url = "https://weixin.qq.com";
     private Map<String, Map<String, String>> data = new HashMap<>();
 
@@ -28,12 +28,12 @@ public class Message {
         this.touser = touser;
     }
 
-    public String getTemplateId() {
-        return templateId;
+    public String getTemplate_id() {
+        return template_id;
     }
 
-    public void setTemplateId(String templateId) {
-        this.templateId = templateId;
+    public void setTemplate_id(String template_id) {
+        this.template_id = template_id;
     }
 
     public String getUrl() {

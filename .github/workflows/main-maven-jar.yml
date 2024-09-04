@@ -35,3 +35,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.CODE_TOKEN }}
           GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+          SECRET: ${{ secrets.SECRET }}
+          APPID: ${{ secrets.APPID }}
