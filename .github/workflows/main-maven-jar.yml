@@ -28,7 +28,7 @@ jobs:
         run: mvn clean install
 
       - name: Copy code-lens-sdk JAR
-        run: mvn dependency:copy -Dartifact=CodeLens:code-lens-sdk:1.0 -DoutputDirectory=./libs
+        run: mvn dependency:copy -Dartifact=com.cong:code-lens-sdk:1.0 -DoutputDirectory=./libs
 
       - name: Run Code Review
         run: java -jar ./libs/code-lens-sdk-1.0.jar
