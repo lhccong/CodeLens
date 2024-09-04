@@ -3,10 +3,10 @@ name: Build and Run CodeLens By Main Maven Jar
 on:
   push:
     branches:
-      - master-closed
+      - master
   pull_request:
     branches:
-      - master-closed
+      - master
 
 jobs:
   build:
@@ -24,8 +24,11 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Create libs directory
+        run: mkdir -p ./libs
+
+      - name: Download openai-code-review-sdk JAR
+        run: wget -O ./libs/code-lens-sdk-1.0.jar https://github.com/lhccong/CodeLens/releases/download/v1.0/code-lens-sdk-1.0.jar
 
       - name: Copy code-lens-sdk JAR
         run: mvn dependency:copy -Dartifact=com.cong:code-lens-sdk:1.0 -DoutputDirectory=./libs
